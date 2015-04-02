@@ -11,7 +11,7 @@ Doorkeeper.configure do
   end
 
   resource_owner_from_credentials do |routes|
-    u = User.find_by(email: params[:username])
+    u = User.find_by(email: params[:username]) || User.find_by(username: params[:username])
     u if u && u.valid_password?(params[:password])
   end
 
@@ -100,3 +100,4 @@ Doorkeeper.configure do
   # set to true if you want this to be allowed
   # wildcard_redirect_uri false
 end
+Doorkeeper.configuration.token_grant_types << "password"
